@@ -1,6 +1,5 @@
 let express = require("express");
 let route = express.Router();
-let db = require("../model/db");
 const { getUser } = require("../utitlity/user");
 
 //get all users

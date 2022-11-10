@@ -7,12 +7,20 @@ const port = process?.env?.port || 3001;
 
 db.sequelize
   .authenticate()
-  .then(() => {
-    console.error(
-      `express server connected to "${
-        process?.env?.SERVERHOST || "NA"
-      }" database "${process?.env?.DBNAME || "NA"}"`
-    );
+  .then((error) => {
+    if (!error) {
+      console.error(
+        `express server connected to "${
+          process?.env?.SERVERHOST || "NA"
+        }" database "${process?.env?.DBNAME || "NA"}"`
+      );
+    } else {
+      console.error(
+        `express server failed  to connected to "${
+          process?.env?.SERVERHOST || "NA"
+        }" database "${process?.env?.DBNAME || "NA"}"`
+      );
+    }
 
     db.sequelize.sync();
     // {force: true}
