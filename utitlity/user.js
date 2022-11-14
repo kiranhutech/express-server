@@ -1,4 +1,27 @@
 const db = require("../model/db");
+const User = db.Users;
+
+async function createUserUtility(userDetails) {
+  try {
+    const users = await User.create(userDetails);
+    if (users) {
+      return { success: true, statusCode: 200, message: "user registered" };
+    } else {
+      return {
+        success: true,
+        statusCode: 500,
+        message: "failed to register user",
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      statusCode: 500,
+      message: "Internal server error",
+      error: error.message,
+    };
+  }
+}
 
 async function getUserUtility(id = null) {
   try {
@@ -23,4 +46,4 @@ async function getUserUtility(id = null) {
   }
 }
 
-exports = { getUser };
+module.exports = { createUserUtility, getUserUtility };

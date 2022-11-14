@@ -1,23 +1,61 @@
-// const { getUserUtility } = require("../utitlity/user");
+const { Router } = require("express");
+// const { authorize } = require("../controller/auth");
+const { createUserUtility, getUserUtility } = require("../utitlity/user");
+const { authorizeUser } = require("../utitlity/auth");
 
-function createUser(req, res) {
-  res.send("ok");
-}
+const router = Router();
 
-function getUser(req, res) {
-  req.send("ok");
-}
+router.post("/signup", async (req, res) => {
+  try {
+    console.log("user signup..................");
+    let response = await createUserUtility(req.body);
+    res.status(response.statusCode).json(response);
+  } catch (error) {
+    res.status(500).json({
+      success: true,
+      statusCode: 500,
+      message: "failed to register user",
+    });
+  }
+});
 
-function getAllUser(req, res) {
-  req.send("ok");
-}
+router.post("/login", (req, res) => {
+  //email && pasw
+  // const userExist = utility.loginUtility(email, password);
+  if (userExist?.id) {
+    // const tooken= createJWTToken({id:userExist?.id,email:userExist?.email})
+    //return response
+  } else {
+    //401
+  }
+});
 
-function updateUser(req, res) {
-  req.send("ok");
-}
+router.post("/add-user", authorizeUser, async (req, res) => {
+  try {
+    console.log("add-user..................");
+    let response = await createUserUtility(req.body);
+    res.status(response.statusCode).json(response);
+  } catch (error) {
+    res.status(500).json({
+      success: true,
+      statusCode: 500,
+      message: "failed to register user",
+    });
+  }
+});
 
-function deleteUser(req, res) {
-  req.send("ok");
-}
+router.get("/:id", (req, res) => {
+  const userId = req.params.id;
+});
 
-module.export = { createUser, getUser, getAllUser, updateUser, deleteUser };
+router.get("/", (req, res) => {
+  //
+});
+router.put("/:id", (req, res) => {
+  const userId = req.params.id;
+});
+router.delete("/:id", (req, res) => {
+  const userId = req.params.id;
+});
+
+module.exports = router;

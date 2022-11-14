@@ -2,7 +2,7 @@ const express = require("express");
 let db = require("./model/db");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const routes = require("./routes/routes");
+const userroutes = require("./controller/user");
 require("dotenv").config();
 const app = express();
 const ENV = process.env;
@@ -44,10 +44,10 @@ app.get("/", (req, res) => {
   res.send("Welcome to Kiran's express server");
 });
 
-app.use("/api/v1", routes);
+app.use("/api/v1/user", userroutes);
 
 app.listen(port, (err) => {
   if (!err) {
-    console.log("server running at port 3001");
+    console.log(`server running at port ${ENV.PORT}`);
   }
 });
